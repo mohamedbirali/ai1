@@ -29,8 +29,7 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`ai1 hello PERSON`](#ai1-hello-person)
-* [`ai1 hello world`](#ai1-hello-world)
+* [`ai1 g ejb PATH`](#ai1-g-ejb-path)
 * [`ai1 help [COMMAND]`](#ai1-help-command)
 * [`ai1 plugins`](#ai1-plugins)
 * [`ai1 plugins add PLUGIN`](#ai1-plugins-add-plugin)
@@ -43,47 +42,33 @@ USAGE
 * [`ai1 plugins unlink [PLUGIN]`](#ai1-plugins-unlink-plugin)
 * [`ai1 plugins update`](#ai1-plugins-update)
 
-## `ai1 hello PERSON`
+## `ai1 g ejb PATH`
 
-Say hello
+Convert files ejb files
 
 ```
 USAGE
-  $ ai1 hello PERSON -f <value>
+  $ ai1 g ejb PATH [-d <value>] [-e <value>]
 
 ARGUMENTS
-  PERSON  Person to say hello to
+  PATH  Directory's path
 
 FLAGS
-  -f, --from=<value>  (required) Who is saying hello
+  -d, --destination=<value>  Where to generate ejb files
+  -e, --extension=<value>    Extension to convert
 
 DESCRIPTION
-  Say hello
+  Convert files ejb files
 
 EXAMPLES
-  $ ai1 hello friend --from oclif
-  hello friend from oclif! (./src/commands/hello/index.ts)
+  - Command bellow will convert ALL (*.ts) files under (repo/ts-files) directory to (*.ts.ejb) and generates the output under (repo/my-directory) directory :
+
+  $ ai1 g ejb repo/ts-files -e ts -o repo/my-directory
+
+  NOTE: Existing files will NOT be renamed, replaced or deleted.
 ```
 
-_See code: [src/commands/hello/index.ts](https://github.com/mohamedbirali/ai1/blob/v0.0.0/src/commands/hello/index.ts)_
-
-## `ai1 hello world`
-
-Say hello world
-
-```
-USAGE
-  $ ai1 hello world
-
-DESCRIPTION
-  Say hello world
-
-EXAMPLES
-  $ ai1 hello world
-  hello world! (./src/commands/hello/world.ts)
-```
-
-_See code: [src/commands/hello/world.ts](https://github.com/mohamedbirali/ai1/blob/v0.0.0/src/commands/hello/world.ts)_
+_See code: [src/commands/g/ejb.ts](https://github.com/mohamedbirali/ai1/blob/v0.0.0/src/commands/g/ejb.ts)_
 
 ## `ai1 help [COMMAND]`
 

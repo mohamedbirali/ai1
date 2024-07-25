@@ -1,5 +1,5 @@
 import {Args, Command, Flags} from '@oclif/core'
-import {copyFileSync, readdirSync} from 'fs-extra'
+import {copyFileSync, createFileSync, readdirSync} from 'fs-extra'
 
 export default class GEjb extends Command {
   static override args = {
@@ -36,11 +36,10 @@ export default class GEjb extends Command {
       }))
 
     const filesLen = files.length
-    // const dist = `${distination}\\ejb`
 
     for (let idx = 0; idx < filesLen; idx++) {
       const file = files[idx]
-      // writeFile(`ejb\\${file.parentPath}\\${file.name}.ejb`, '')
+      createFileSync(`ejb\\${file.parentPath}\\${file.name}.ejb`)
       copyFileSync(`${file.parentPath}\\${file.name}`, `ejb\\${file.parentPath}\\${file.name}.ejb`)
     }
 
