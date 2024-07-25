@@ -1,6 +1,6 @@
 {
   "name": "ai1",
-  "description": "Save effots and time",
+  "description": "Save effots and time by generating boilerplates, inpired by Angular CLI",
   "version": "0.0.0",
   "author": "mohamedbirali",
   "bin": {

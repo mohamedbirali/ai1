@@ -1,19 +1,19 @@
-ai1
-=================
+# ai1
 
-Save effots and time
-
+Save effots and time by generating boilerplates, inpired by Angular CLI
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/ai1.svg)](https://npmjs.org/package/ai1)
 [![Downloads/week](https://img.shields.io/npm/dw/ai1.svg)](https://npmjs.org/package/ai1)
 
-
 <!-- toc -->
+* [ai1](#ai1)
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
+
 # Usage
+
 <!-- usage -->
 ```sh-session
 $ npm install -g ai1
@@ -27,7 +27,9 @@ USAGE
 ...
 ```
 <!-- usagestop -->
+
 # Commands
+
 <!-- commands -->
 * [`ai1 g ejb PATH`](#ai1-g-ejb-path)
 * [`ai1 help [COMMAND]`](#ai1-help-command)
