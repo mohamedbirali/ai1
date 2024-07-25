@@ -2,7 +2,7 @@ import {Args, Command, Flags} from '@oclif/core'
 
 export default class GAi1Crud extends Command {
   static override args = {
-    name: Args.string({description: 'Entity name'}),
+    entity: Args.string({description: 'Entity name'}),
   }
 
   static override description = 'Generate CRUD operations for an entity including routes and search'
@@ -13,19 +13,12 @@ export default class GAi1Crud extends Command {
   ]
 
   static override flags = {
-    // flag with no value (-f, --force)
-    force: Flags.boolean({char: 'f'}),
-    // flag with a value (-n, --name=VALUE)
-    name: Flags.string({char: 'n', description: 'name to print'}),
+    model: Flags.string({char: 'm', description: 'Entity model/types separated by comma(,)', required: false}),
   }
 
   public async run(): Promise<void> {
-    const {args, flags} = await this.parse(GAi1Crud)
+    // const {args,} = await this.parse(GAi1Crud)
 
-    const name = flags.name ?? 'world'
-    this.log(`hello ${name}`)
-    if (args.name && flags.force) {
-      this.log(`you input --force and --file: ${args.name}`)
-    }
+    this.log(`g crud`)
   }
 }

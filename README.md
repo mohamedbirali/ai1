@@ -31,7 +31,10 @@ USAGE
 # Commands
 
 <!-- commands -->
-* [`ai1 g ejb PATH`](#ai1-g-ejb-path)
+* [`ai1 g ai1-crud [ENTITY]`](#ai1-g-ai1-crud-entity)
+* [`ai1 g ejs PATH`](#ai1-g-ejs-path)
+* [`ai1 g form [INPUTS]`](#ai1-g-form-inputs)
+* [`ai1 g model [PROPERTIES]`](#ai1-g-model-properties)
 * [`ai1 help [COMMAND]`](#ai1-help-command)
 * [`ai1 plugins`](#ai1-plugins)
 * [`ai1 plugins add PLUGIN`](#ai1-plugins-add-plugin)
@@ -44,33 +47,106 @@ USAGE
 * [`ai1 plugins unlink [PLUGIN]`](#ai1-plugins-unlink-plugin)
 * [`ai1 plugins update`](#ai1-plugins-update)
 
-## `ai1 g ejb PATH`
+## `ai1 g ai1-crud [ENTITY]`
 
-Convert files ejb files
+Generate CRUD operations for an entity including routes and search
 
 ```
 USAGE
-  $ ai1 g ejb PATH [-d <value>] [-e <value>]
+  $ ai1 g ai1-crud [ENTITY] [-m <value>]
+
+ARGUMENTS
+  ENTITY  Entity name
+
+FLAGS
+  -m, --model=<value>  Entity model/types separated by comma(,)
+
+DESCRIPTION
+  Generate CRUD operations for an entity including routes and search
+
+EXAMPLES
+  - Command bellow will gnerate blog-card, blog-list, blog-edit and parent component blog
+
+  $ ai1 g ai1-crud blog
+```
+
+_See code: [src/commands/g/ai1-crud.ts](https://github.com/mohamedbirali/ai1/blob/v0.0.0/src/commands/g/ai1-crud.ts)_
+
+## `ai1 g ejs PATH`
+
+Generate ejs file from existing files/templates
+
+```
+USAGE
+  $ ai1 g ejs PATH [-d <value>] [-e <value>]
 
 ARGUMENTS
   PATH  Directory's path
 
 FLAGS
-  -d, --destination=<value>  Where to generate ejb files
+  -d, --destination=<value>  Where to generate ejs files
   -e, --extension=<value>    Extension to convert
 
 DESCRIPTION
-  Convert files ejb files
+  Generate ejs file from existing files/templates
 
 EXAMPLES
-  - Command bellow will convert ALL (*.ts) files under (repo/ts-files) directory to (*.ts.ejb) and generates the output under (repo/my-directory) directory :
+  - Command bellow will convert ALL (*.ts) files under (repo/ts-files) directory to (*.ts.ejs) and generates the output under (repo/my-directory) directory :
 
-  $ ai1 g ejb repo/ts-files -e ts -o repo/my-directory
+  $ ai1 g ejs repo/ts-files -e ts -o repo/my-directory
 
   NOTE: Existing files will NOT be renamed, replaced or deleted.
 ```
 
-_See code: [src/commands/g/ejb.ts](https://github.com/mohamedbirali/ai1/blob/v0.0.0/src/commands/g/ejb.ts)_
+_See code: [src/commands/g/ejs.ts](https://github.com/mohamedbirali/ai1/blob/v0.0.0/src/commands/g/ejs.ts)_
+
+## `ai1 g form [INPUTS]`
+
+Generate form using Angular Material, tailwindcss
+
+```
+USAGE
+  $ ai1 g form [INPUTS] [-f] [-n <value>]
+
+ARGUMENTS
+  INPUTS  Inputs to generate separated by comma
+
+FLAGS
+  -f, --force
+  -n, --name=<value>  name to print
+
+DESCRIPTION
+  Generate form using Angular Material, tailwindcss
+
+EXAMPLES
+  $ ai1 g form
+```
+
+_See code: [src/commands/g/form.ts](https://github.com/mohamedbirali/ai1/blob/v0.0.0/src/commands/g/form.ts)_
+
+## `ai1 g model [PROPERTIES]`
+
+Generate typescript type
+
+```
+USAGE
+  $ ai1 g model [PROPERTIES] [-f] [-n <value>]
+
+ARGUMENTS
+  PROPERTIES  Properties to generate separated by comma
+
+FLAGS
+  -f, --force
+  -n, --name=<value>  name to print
+
+DESCRIPTION
+  Generate typescript type
+
+EXAMPLES
+  $ ai1 g model
+```
+
+_See code: [src/commands/g/model.ts](https://github.com/mohamedbirali/ai1/blob/v0.0.0/src/commands/g/model.ts)_
 
 ## `ai1 help [COMMAND]`
 
