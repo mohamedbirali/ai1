@@ -1,32 +1,32 @@
 import {Args, Command, Flags} from '@oclif/core'
 import {copyFileSync, createFileSync, readdirSync} from 'fs-extra'
 
-export default class GEjb extends Command {
+export default class GEjs extends Command {
   static override args = {
     path: Args.string({description: "Directory's path", required: true}),
   }
 
-  static override description = 'Convert files ejb files'
+  static override description = 'Generate ejs file from existing files/templates'
 
   static override examples = [
-    '- Command bellow will convert ALL (*.ts) files under (repo/ts-files) directory to (*.ts.ejb) and generates the output under (repo/my-directory) directory :',
+    '- Command bellow will convert ALL (*.ts) files under (repo/ts-files) directory to (*.ts.ejs) and generates the output under (repo/my-directory) directory :',
     '<%= config.bin %> <%= command.id %> repo/ts-files -e ts -o repo/my-directory',
     'NOTE: Existing files will NOT be renamed, replaced or deleted.',
   ]
 
   static override flags = {
-    destination: Flags.string({char: 'd', description: 'Where to generate ejb files', required: false}),
+    destination: Flags.string({char: 'd', description: 'Where to generate ejs files', required: false}),
     extension: Flags.string({char: 'e', description: 'Extension to convert', required: false}),
   }
 
   public async run(): Promise<void> {
-    const {args, flags} = await this.parse(GEjb)
+    const {args} = await this.parse(GEjs)
 
     // get use inputs
     const {path} = args
-    const {destination, extension} = flags
 
     // business logic
+
     // read all files recusrsivly
     const files = readdirSync(path, {recursive: true, withFileTypes: true})
       .filter((file) => file.isFile() && file.name)
@@ -36,14 +36,14 @@ export default class GEjb extends Command {
       }))
 
     const filesLen = files.length
+    const ejs = 'ejs'
 
     for (let idx = 0; idx < filesLen; idx++) {
       const file = files[idx]
-      createFileSync(`ejb\\${file.parentPath}\\${file.name}.ejb`)
-      copyFileSync(`${file.parentPath}\\${file.name}`, `ejb\\${file.parentPath}\\${file.name}.ejb`)
+      createFileSync(`${ejs}\\${file.parentPath}\\${file.name}.${ejs}`)
+      copyFileSync(`${file.parentPath}\\${file.name}`, `${ejs}\\${file.parentPath}\\${file.name}.${ejs}`)
     }
 
-    // this.log(files.map((file) => file.name + ' - ' + file.parentPath).join(' \n'))
-    this.log(`path: ${path} \n extension: ${extension} \n  destination: ${destination}`)
+    this.log(`files generated: ${path}/${ejs}`)
   }
 }
