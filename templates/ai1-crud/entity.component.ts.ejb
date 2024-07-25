@@ -1,0 +1,14 @@
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+
+@Component({
+  selector: 'ai1-entity',
+  standalone: true,
+  imports: [],
+  templateUrl: './entity.component.html',
+  styles: ``,
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class EntityComponent {
+
+}

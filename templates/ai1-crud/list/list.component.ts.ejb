@@ -1,0 +1,78 @@
+import { AbstractFireStore } from '@ai1/3rd/firebase/abstracts';
+import { Ai1BasicPlaceholderComponent } from '@ai1/ui-common/components/placeholders/basic-placeholder.component';
+import { AsyncPipe, TitleCasePipe } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatFormField, MatPrefix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatTooltip } from '@angular/material/tooltip';
+import { RouterLink } from '@angular/router';
+import { combineLatest, map, of, startWith } from 'rxjs';
+import { CardComponent } from '../card/card.component';
+import { Entity } from '../models/entity.model';
+
+@Component({
+    selector: 'ai1-entity-list',
+    standalone: true,
+    templateUrl: './list.component.html',
+    imports: [
+        // ng
+        FormsModule,
+        ReactiveFormsModule,
+        RouterLink,
+        AsyncPipe,
+        TitleCasePipe,
+        // mat
+        MatFormField,
+        MatInput,
+        MatPrefix,
+        MatButton,
+        MatIcon,
+        MatTooltip,
+        // ai1
+        Ai1BasicPlaceholderComponent,
+        CardComponent,
+    ],
+})
+export class EntityListComponent extends AbstractFireStore {
+    // schema
+    readonly #entity = 'entities';
+    // template
+    readonly title = 'entity';
+    // injections
+    #entities$ = this._queryCollection$(this.#entity, [], []).pipe(
+        map((entities: Entity[]) => {
+            if (entities) this.isResponse = true;
+            return entities;
+        })
+    );
+    // form
+    searchCtrl = new FormControl('');
+    // obs$
+    filtered$ = of([]);
+    // helper
+    isResponse = false;
+
+    // hooks
+    ngOnInit(): void {
+        this.#initSearch();
+    }
+
+    // private
+    #initSearch() {
+        const search$ = this.searchCtrl.valueChanges.pipe(
+            startWith(this.searchCtrl.value),
+            map((value) => value.trim().toLowerCase())
+        );
+
+        this.filtered$ = combineLatest([this.#entities$, search$]).pipe(
+            map(([entities, searchedValue]: any[]) =>
+                entities.filter((entity) =>
+                    entity.name.toLowerCase().includes(searchedValue)
+                )
+            )
+        );
+    }
+}

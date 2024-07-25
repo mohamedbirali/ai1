@@ -1,0 +1,49 @@
+<div class="w-full p-6 sm:p-10 sm:pt-6">
+    <div class="grid w-full grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-3">
+        <mat-form-field
+            class="fuse-mat-dense fuse-mat-rounded"
+            [subscriptSizing]="'dynamic'"
+        >
+            <mat-icon
+                matPrefix
+                [svgIcon]="'heroicons_outline:magnifying-glass'"
+                class="icon-size-4"
+            />
+            <input
+                matInput
+                [formControl]="searchCtrl"
+                [placeholder]="'Search ' + (title | titlecase) + 's by Name'"
+                type="search"
+            />
+        </mat-form-field>
+        <div class="col-start-2 flex justify-end lg:col-start-3 xl:col-start-4">
+            <button mat-flat-button [routerLink]="'../add'" [color]="'primary'">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'" />
+                <div class="pl-2">Add {{ title | titlecase }}</div>
+            </button>
+        </div>
+    </div>
+    <div
+        class="mt-8 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
+    >
+        @for (item of filtered$ | async; track $index) {
+            <ai1-portfolio-card
+                [id]="item.id"
+                [name]="item.name"
+                [status]="item.status"
+                [avatar]="item.avatar"
+                [cover]="item.cover"
+            />
+        } @empty {
+            <!-- if no result when searching -->
+            @if (isResponse) {
+                No {{ title | titlecase }} Found
+            }
+        }
+    </div>
+
+    <!-- when no response -->
+    @if (!isResponse) {
+        <ai1-basic-placeholder />
+    }
+</div>
