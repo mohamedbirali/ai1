@@ -1,6 +1,6 @@
 import {Args, Command, Flags} from '@oclif/core'
 
-export default class GAi1Crud extends Command {
+export default class GCrud extends Command {
   static override args = {
     entity: Args.string({description: 'Entity name'}),
   }
