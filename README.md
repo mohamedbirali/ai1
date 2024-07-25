@@ -31,7 +31,7 @@ USAGE
 # Commands
 
 <!-- commands -->
-* [`ai1 g ai1-crud [ENTITY]`](#ai1-g-ai1-crud-entity)
+* [`ai1 g crud [ENTITY]`](#ai1-g-crud-entity)
 * [`ai1 g ejs PATH`](#ai1-g-ejs-path)
 * [`ai1 g form [INPUTS]`](#ai1-g-form-inputs)
 * [`ai1 g model [PROPERTIES]`](#ai1-g-model-properties)
@@ -47,13 +47,13 @@ USAGE
 * [`ai1 plugins unlink [PLUGIN]`](#ai1-plugins-unlink-plugin)
 * [`ai1 plugins update`](#ai1-plugins-update)
 
-## `ai1 g ai1-crud [ENTITY]`
+## `ai1 g crud [ENTITY]`
 
 Generate CRUD operations for an entity including routes and search
 
 ```
 USAGE
-  $ ai1 g ai1-crud [ENTITY] [-m <value>]
+  $ ai1 g crud [ENTITY] [-m <value>]
 
 ARGUMENTS
   ENTITY  Entity name
@@ -67,10 +67,10 @@ DESCRIPTION
 EXAMPLES
   - Command bellow will gnerate blog-card, blog-list, blog-edit and parent component blog
 
-  $ ai1 g ai1-crud blog
+  $ ai1 g crud blog
 ```
 
-_See code: [src/commands/g/ai1-crud.ts](https://github.com/mohamedbirali/ai1/blob/v0.0.0/src/commands/g/ai1-crud.ts)_
+_See code: [src/commands/g/crud.ts](https://github.com/mohamedbirali/ai1/blob/v0.0.0/src/commands/g/crud.ts)_
 
 ## `ai1 g ejs PATH`
 
