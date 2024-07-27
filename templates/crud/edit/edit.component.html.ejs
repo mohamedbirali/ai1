@@ -27,7 +27,7 @@
             class="mt-4 w-full"
             [modules]="modules"
             [formControlName]="<%= entityCamel %>Props.DESCRIPTION"
-            [placeholder]="'About description here ...' | titlecase"
+            [placeholder]="'<%= entityPascal %> description here ...' | titlecase"
         />
     </form>
 
@@ -40,7 +40,7 @@
 
             <div class="flex justify-end px-8">
                 <button
-                    [matTooltip]="'Redirect to Add About'"
+                    [matTooltip]="'Redirect to Add <%= entityPascal %>'"
                     [routerLink]="'../../add'"
                     mat-icon-button
                 >
