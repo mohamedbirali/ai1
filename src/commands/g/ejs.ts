@@ -27,7 +27,7 @@ export default class GEjs extends Command {
 
     // business logic
 
-    // read all files recusrsivly
+    // read all files recursivly
     const files = readdirSync(path, {recursive: true, withFileTypes: true})
       .filter((file) => file.isFile() && file.name)
       .map((file) => ({

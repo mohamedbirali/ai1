@@ -31,7 +31,7 @@ USAGE
 # Commands
 
 <!-- commands -->
-* [`ai1 g crud [ENTITY]`](#ai1-g-crud-entity)
+* [`ai1 g crud ENTITY`](#ai1-g-crud-entity)
 * [`ai1 g ejs PATH`](#ai1-g-ejs-path)
 * [`ai1 g form [INPUTS]`](#ai1-g-form-inputs)
 * [`ai1 g model [PROPERTIES]`](#ai1-g-model-properties)
@@ -47,19 +47,20 @@ USAGE
 * [`ai1 plugins unlink [PLUGIN]`](#ai1-plugins-unlink-plugin)
 * [`ai1 plugins update`](#ai1-plugins-update)
 
-## `ai1 g crud [ENTITY]`
+## `ai1 g crud ENTITY`
 
 Generate CRUD operations for an entity including routes and search
 
 ```
 USAGE
-  $ ai1 g crud [ENTITY] [-m <value>]
+  $ ai1 g crud ENTITY [-p <value>] [-m <value>]
 
 ARGUMENTS
-  ENTITY  Entity name
+  ENTITY  Entity name (singular name)
 
 FLAGS
-  -m, --model=<value>  Entity model/types separated by comma(,)
+  -m, --model=<value>        Entity model/types separated by comma(,)
+  -p, --destination=<value>  [default: .] Path to directory
 
 DESCRIPTION
   Generate CRUD operations for an entity including routes and search

@@ -10,11 +10,11 @@ import { MatInput } from '@angular/material/input';
 import { MatTooltip } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { combineLatest, map, of, startWith } from 'rxjs';
-import { CardComponent } from '../card/card.component';
-import { Entity } from '../models/entity.model';
+import { <%= entityPascal %>CardComponent } from '../card/card.component';
+import { <%= entityPascal %> } from '../models/<%= entityLower %>.model';
 
 @Component({
-    selector: 'ai1-entity-list',
+    selector: 'ai1-<%= entityKebab %>-list',
     standalone: true,
     templateUrl: './list.component.html',
     imports: [
@@ -33,44 +33,53 @@ import { Entity } from '../models/entity.model';
         MatTooltip,
         // ai1
         Ai1BasicPlaceholderComponent,
-        CardComponent,
+        <%= entityPascal %>CardComponent,
+        // fuse
     ],
 })
-export class EntityListComponent extends AbstractFireStore {
-    // schema
-    readonly #entity = 'entities';
-    // template
-    readonly title = 'entity';
-    // injections
-    #entities$ = this._queryCollection$(this.#entity, [], []).pipe(
-        map((entities: Entity[]) => {
-            if (entities) this.isResponse = true;
-            return entities;
+export class <%= entityPascal %>ListComponent extends AbstractFireStore {
+    // Env - readonly
+    // Template
+    readonly title = '<%= entityLower %>';
+    // @inputs
+    // @outputs
+    // Form
+    searchCtrl = new FormControl('');
+    // Collections - readonly
+    readonly #<%= entityLower %> = '<%= entityLower %>';
+    // Privates - #
+    // Helpers
+    isResponse = false;
+    // Obs$
+    filtered$ = of([]);
+    // DI
+    #<%= entityLower %>s$ = this._queryCollection$(this.#<%= entityLower %>, [], []).pipe(
+        map((<%= entityLower %>s: <%= entityPascal %>[]) => {
+            if (<%= entityLower %>s) this.isResponse = true;
+            return <%= entityLower %>s;
         })
     );
-    // form
-    searchCtrl = new FormControl('');
-    // obs$
-    filtered$ = of([]);
-    // helper
-    isResponse = false;
-
-    // hooks
+    // =========
+    // Contructor
+    // Hooks - unsubscribe all on the ngOnDestroy
     ngOnInit(): void {
         this.#initSearch();
     }
-
-    // private
+    // =========
+    // Public methods used in the template.
+    // Public http/firebase intercation.
+    // =========
+    // Private methods - #
     #initSearch() {
         const search$ = this.searchCtrl.valueChanges.pipe(
             startWith(this.searchCtrl.value),
             map((value) => value.trim().toLowerCase())
         );
 
-        this.filtered$ = combineLatest([this.#entities$, search$]).pipe(
-            map(([entities, searchedValue]: any[]) =>
-                entities.filter((entity) =>
-                    entity.name.toLowerCase().includes(searchedValue)
+        this.filtered$ = combineLatest([this.#<%= entityLower %>s$, search$]).pipe(
+            map(([<%= entityLower %>s, searchedValue]: any[]) =>
+            <%= entityLower %>s.filter((<%= entityLower %>: <%= entityPascal %>) =>
+                <%= entityLower %>.name.toLowerCase().includes(searchedValue)
                 )
             )
         );

@@ -1,9 +1,9 @@
 import { AI1_TITLE_SUFFIX } from 'app/app.routes';
-import { EntityEditComponent } from './edit/edit.component';
-import { EntityComponent } from './entity.component';
-import { EntityListComponent } from './list/list.component';
+import { <%= entityPascal %>EditComponent } from './edit/edit.component';
+import { <%= entityPascal %>Component } from './<%= entityKebab %>.component';
+import { <%= entityPascal %>ListComponent } from './list/list.component';
 
-const entity = 'Entity';
+const <%= entityConstant %> = '<%= entityCapital %>';
 
 export default [
     {
@@ -13,12 +13,12 @@ export default [
     },
     {
         path: '',
-        component: EntityComponent,
+        component: <%= entityPascal %>Component,
         children: [
             {
                 path: 'list',
-                component: EntityListComponent,
-                title: `${entity}: List` + AI1_TITLE_SUFFIX,
+                component: <%= entityPascal %>ListComponent,
+                title: `${<%= entityConstant %>}: List` + AI1_TITLE_SUFFIX,
                 data: {
                     breadcrumb: {
                         label: 'List',
@@ -28,8 +28,8 @@ export default [
             },
             {
                 path: 'add',
-                component: EntityEditComponent,
-                title: `${entity}: Add` + AI1_TITLE_SUFFIX,
+                component: <%= entityPascal %>EditComponent,
+                title: `${<%= entityConstant %>}: Add` + AI1_TITLE_SUFFIX,
                 data: {
                     breadcrumb: {
                         label: 'Add',
@@ -39,8 +39,8 @@ export default [
             },
             {
                 path: 'edit/:id',
-                component: EntityEditComponent,
-                title: `${entity}: Edit` + AI1_TITLE_SUFFIX,
+                component: <%= entityPascal %>EditComponent,
+                title: `${<%= entityConstant %>}: Edit` + AI1_TITLE_SUFFIX,
                 data: {
                     breadcrumb: {
                         label: 'Edit',

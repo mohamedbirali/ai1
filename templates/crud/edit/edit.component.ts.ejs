@@ -5,12 +5,36 @@ import {
 } from '@angular/core';
 
 @Component({
-    selector: 'ai1-entity-edit',
+    selector: 'ai1-<%= entityKebab %>-edit',
     standalone: true,
-    imports: [],
     templateUrl: './edit.component.html',
-    styles: ``,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    styles: ``,
+    imports: [
+        // ng
+        // mat
+        // ai1
+        // fuse
+    ],
 })
-export class EntityEditComponent {}
+export class <%= entityPascal %>EditComponent {
+    // Env - readonly
+    // Template
+    // @inputs
+    // @outputs
+    // Form
+    // Collections - readonly
+    // Privates - #
+    // Helpers
+    // Obs$
+    // DI
+    // =========
+    // Contructor
+    // Hooks - unsubscribe all on the ngOnDestroy
+    // =========
+    // Public methods used in the template.
+    // Public http/firebase intercation.
+    // =========
+    // Private methods - #
+}

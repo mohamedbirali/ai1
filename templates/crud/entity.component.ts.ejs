@@ -1,14 +1,42 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ViewEncapsulation,
+} from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'ai1-entity',
-  standalone: true,
-  imports: [],
-  templateUrl: './entity.component.html',
-  styles: ``,
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'ai1-<%= entityKebab %>',
+    standalone: true,
+    templateUrl: './<%= entityKebab %>.component.html',
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    styles: ``,
+    imports: [
+        // ng
+        RouterOutlet,
+        // mat
+        // ai1
+        // fuse
+    ],
 })
-export class EntityComponent {
-
+export class <%= entityPascal %>Component {
+    // Env - readonly
+    // Template
+    // @inputs
+    // @outputs
+    // Form
+    // Collections - readonly
+    // Privates - #
+    // Helpers
+    // Obs$
+    // DI
+    // =========
+    // Contructor
+    // Hooks - unsubscribe all on the ngOnDestroy
+    // =========
+    // Public methods used in the template.
+    // Public http/firebase intercation.
+    // =========
+    // Private methods - #
 }

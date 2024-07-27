@@ -1,6 +1,6 @@
 {
   "name": "ai1",
-  "description": "Save effots and time by generating boilerplates, inpired by Angular CLI",
+  "description": "Save effort and time by generating boilerplates, inpired by Angular CLI",
   "version": "0.0.0",
   "author": "mohamedbirali",
   "bin": {
@@ -11,12 +11,15 @@
     "@oclif/core": "^4",
     "@oclif/plugin-help": "^6",
     "@oclif/plugin-plugins": "^5",
+    "change-case": "^4",
+    "ejs": "^3.1.10",
     "fs-extra": "^11.2.0"
   },
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
     "@oclif/test": "^4",
     "@types/chai": "^4",
+    "@types/ejs": "^3.1.5",
     "@types/fs-extra": "^11.0.4",
     "@types/mocha": "^10",
     "@types/node": "^18",
@@ -37,7 +40,8 @@
   "files": [
     "/bin",
     "/dist",
-    "/oclif.manifest.json"
+    "/oclif.manifest.json",
+    "/templates"
   ],
   "homepage": "https://github.com/mohamedbirali/ai1",
   "keywords": [
