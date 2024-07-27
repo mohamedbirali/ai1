@@ -1,3 +1,4 @@
+import { Ai1EmailHelper } from '@ai1/util-common/helpers/email.helper';
 import { TitleCasePipe } from '@angular/common';
 import {
     ChangeDetectionStrategy,
@@ -5,6 +6,7 @@ import {
     input,
     ViewEncapsulation,
 } from '@angular/core';
+import { MatTooltip } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { FuseCardComponent } from '@fuse/components/card';
 
@@ -20,6 +22,7 @@ import { FuseCardComponent } from '@fuse/components/card';
         RouterLink,
         TitleCasePipe,
         // mat
+        MatTooltip,
         // fuse
         FuseCardComponent,
         // ai1
@@ -31,11 +34,15 @@ export class <%= entityPascal %>CardComponent {
     // @inputs
     id = input.required();
     name = input.required();
+    description = input.required({
+        transform: (desc) => this.descriptionPlain(`${desc}`),
+    });
     // @outputs
     // Form
     // Collections - readonly
     // Privates - #
     // Helpers
+    #ai1EmailHelper = new Ai1EmailHelper();
     // Obs$
     // DI
     // =========
@@ -43,6 +50,9 @@ export class <%= entityPascal %>CardComponent {
     // Hooks - unsubscribe all on the ngOnDestroy
     // =========
     // Public methods used in the template.
+    descriptionPlain(html: string) {
+        return this.#ai1EmailHelper.toPlainText(html);
+    }
     // Public http/firebase intercation.
     // =========
     // Private methods - #

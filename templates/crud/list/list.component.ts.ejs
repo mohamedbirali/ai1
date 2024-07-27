@@ -46,7 +46,7 @@ export class <%= entityPascal %>ListComponent extends AbstractFireStore {
     // Form
     searchCtrl = new FormControl('');
     // Collections - readonly
-    readonly #<%= entityLower %> = '<%= parentCollection %><%= entityLower %>';
+    readonly #<%= entityLower %> = '<%= parentCollection %><%= entityLower %>s';
     // Privates - #
     // Helpers
     isResponse = false;

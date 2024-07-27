@@ -117,7 +117,7 @@ export class <%= entityPascal %>EditComponent extends AbstractFireStore {
     async remove() {
         this.#fuseConfirmationService
             .open({
-                title: 'You are deleting this <%= entityLower %> description',
+                title: 'You are deleting this <%= alertDelete %>',
                 message: 'This is a destructive operation',
                 icon: {
                     show: true,

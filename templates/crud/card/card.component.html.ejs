@@ -1,5 +1,5 @@
 <fuse-card
-    class="flex w-full items-start justify-between p-6 hover:ring-2 hover:ring-accent dark:hover:ring-primary-50"
+    class="bg-default flex w-full items-start justify-between p-6 hover:ring-2 hover:ring-accent dark:hover:ring-primary-50"
 >
     <div class="flex w-full flex-col">
         <div
@@ -7,6 +7,12 @@
             class="line-clamp-1 cursor-pointer text-2xl font-semibold leading-tight hover:text-primary-500"
         >
             {{ name() | titlecase }}
+        </div>
+        <div
+            class="line-clamp-1 pt-2 text-sm hover:underline hover:decoration-primary-300"
+            [matTooltip]="description()"
+        >
+            {{ description() }}
         </div>
     </div>
 </fuse-card>
