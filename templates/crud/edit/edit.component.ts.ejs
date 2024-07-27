@@ -1,8 +1,38 @@
+import { AbstractFireStore } from '@ai1/3rd/firebase/abstracts';
+import { Ai1FormValidatorError } from '@ai1/ui-common/forms/form.errors';
+import { TitleCasePipe } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
+    inject,
+    input,
     ViewEncapsulation,
 } from '@angular/core';
+import {
+    AbstractControl,
+    FormBuilder,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDivider } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltip } from '@angular/material/tooltip';
+import { Router, RouterLink } from '@angular/router';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { QuillEditorComponent } from 'ngx-quill';
+import { map, take } from 'rxjs';
+import { <%= entityPascal %> } from '../models/<%= entityKebab %>.model';
+
+const <%= entityConstant %>_PROPS = {
+    ID: 'id',
+    NAME: 'name',
+    DESCRIPTION: 'description',
+};
 
 @Component({
     selector: 'ai1-<%= entityKebab %>-edit',
@@ -13,28 +43,142 @@ import {
     styles: ``,
     imports: [
         // ng
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        RouterLink,
+        TitleCasePipe,
         // mat
-        // ai1
-        // fuse
+        MatDivider,
+        MatButtonModule,
+        MatIcon,
+        MatTooltip,
+        // 3rd
+        QuillEditorComponent,
     ],
 })
-export class <%= entityPascal %>EditComponent {
+export class <%= entityPascal %>EditComponent extends AbstractFireStore {
     // Env - readonly
     // Template
-    // @inputs
-    // @outputs
-    // Form
     // Collections - readonly
+    readonly #<%= entityCamel %>s = '<%= parentCollection %><%= entitySnake %>s';
+    // @inputs
+    id = input<string>();
+    // @outputs
+    // DI - #
+    #formBuilder = inject(FormBuilder);
+    #router = inject(Router);
+    #fuseConfirmationService = inject(FuseConfirmationService);
+    // Form
+    <%= entityCamel %>Props = <%= entityConstant %>_PROPS;
+    <%= entityCamel %>Form: FormGroup = this.#initForm();
     // Privates - #
+    readonly #portfolioId = inject(Router).url.split('edit/')[1].split('/')[0];
     // Helpers
     // Obs$
-    // DI
+    // 3rd
+    modules: any = this.#initQuill();
     // =========
     // Contructor
     // Hooks - unsubscribe all on the ngOnDestroy
+    ngOnInit() {
+        this.#initData();
+    }
     // =========
     // Public methods used in the template.
+    getInputError(ctrl: AbstractControl, name: string) {
+        return Ai1FormValidatorError.getFormControlErrorText(ctrl, name);
+    }
+
+    isNotUpdated() {
+        //
+    }
+
     // Public http/firebase intercation.
+    async save() {
+        if (this.id()) {
+            await this._setData(
+                this.#<%= entityCamel %>s,
+                { ...this.<%= entityCamel %>Form.value, portfolioId: this.#portfolioId },
+                this.id()
+            );
+        } else {
+            const created = await this._addDoc(this.#<%= entityCamel %>s, {
+                ...this.<%= entityCamel %>Form.value,
+                portfolioId: this.#portfolioId,
+            });
+            this.#router.navigateByUrl(
+                `pages/portfolio/edit/${this.#portfolioId}/<%= entityLower %>/edit/${created.id}`
+            );
+        }
+    }
+
+    async remove() {
+        this.#fuseConfirmationService
+            .open({
+                title: 'You are deleting this <%= entityLower %> description',
+                message: 'This is a destructive operation',
+                icon: {
+                    show: true,
+                    color: 'error',
+                    name: 'heroicons_outline:exclamation-triangle',
+                },
+                actions: {
+                    cancel: {
+                        show: true,
+                        label: 'Cancel',
+                    },
+                    confirm: {
+                        show: true,
+                        label: 'Confirm',
+                    },
+                },
+                dismissible: true,
+            })
+            .afterClosed()
+            .pipe(take(1))
+            .subscribe(async (message: string) => {
+                if (message === 'confirmed') {
+                    await this._softDeleteDoc(this.#<%= entityCamel %>s, this.id());
+                    this.#router.navigateByUrl(
+                        `pages/portfolio/edit/${this.#portfolioId}/<%= entityLower %>/list`
+                    );
+                }
+            });
+    }
     // =========
     // Private methods - #
+    #initForm() {
+        return this.#formBuilder.group({
+            [<%= entityConstant %>_PROPS.ID]: ['', []],
+            [<%= entityConstant %>_PROPS.NAME]: ['', [Validators.required]],
+            [<%= entityConstant %>_PROPS.DESCRIPTION]: ['', [Validators.required]],
+        });
+    }
+
+    #initQuill() {
+        return {
+            toolbar: [
+                ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+
+                [{ list: 'ordered' }, { list: 'bullet' }],
+
+                ['link'],
+
+                ['clean'],
+            ],
+        };
+    }
+
+    #initData() {
+        if (this.id())
+            this._getDoc$(this.#<%= entityCamel %>s, this.id())
+                .pipe(
+                    map((<%= entityLower %>: <%= entityPascal %>) => {
+                        this.<%= entityCamel %>Form.patchValue(<%= entityLower %>);
+                    })
+                )
+                .subscribe();
+    }
 }

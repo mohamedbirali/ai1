@@ -1,5 +1,5 @@
 import {Args, Command, Flags} from '@oclif/core'
-import {capitalCase, constantCase, noCase, paramCase, pascalCase} from 'change-case'
+import {camelCase, capitalCase, constantCase, noCase, paramCase, pascalCase, snakeCase} from 'change-case'
 import {renderFile} from 'ejs'
 import {outputFile, readdirSync} from 'fs-extra'
 import {join} from 'node:path'
@@ -17,24 +17,43 @@ export default class GCrud extends Command {
   ]
 
   static override flags = {
-    destination: Flags.string({char: 'p', default: '.', description: 'Path to directory'}),
+    alertDelete: Flags.string({char: 'a', description: 'Message to show when deleting'}),
+    destination: Flags.string({char: 'd', default: '.', description: 'Path to directory'}),
     model: Flags.string({char: 'm', description: 'Entity model/types separated by comma(,)', required: false}),
+    parentCollection: Flags.string({
+      char: 'p',
+      description: 'Which collection this entity belong to, its like one to many in the SQL world',
+      required: false,
+    }),
   }
 
   public async run(): Promise<void> {
     const {args, flags} = await this.parse(GCrud)
-    const {destination, model} = flags
+    const {alertDelete, destination, model, parentCollection} = flags
     const {entity} = args
-    const entityProps = model?.trim().split(',') ?? 'id: string;\n    name: string;'
+    const entityProps = model?.trim().split(',') ?? 'id: string;\n    name: string;\n    description: string;'
     const entityLower = noCase(entity)
+    const entityCamel = camelCase(entity)
     const entityCapital = capitalCase(entity)
     const entityKebab = paramCase(entity)
     const entityConstant = constantCase(entity)
     const entityPascal = pascalCase(entity)
+    const entitySnake = snakeCase(entity)
     const outputDir = `${destination}\\${entityKebab}`
     const templatesDir = join(__dirname, '../../../templates/crud')
 
-    const data = {entityCapital, entityConstant, entityKebab, entityLower, entityPascal, entityProps}
+    const data = {
+      alertDelete: alertDelete ? `${noCase(`${alertDelete}`)}` : entityLower,
+      entityCamel,
+      entityCapital,
+      entityConstant,
+      entityKebab,
+      entityLower,
+      entityPascal,
+      entityProps,
+      entitySnake,
+      parentCollection: parentCollection ? `${snakeCase(parentCollection)}_` : '',
+    }
 
     /**
      * read files name

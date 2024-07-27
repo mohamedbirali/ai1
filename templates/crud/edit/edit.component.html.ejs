@@ -1,1 +1,65 @@
-<p><%= entityKebab %> works!</p>
+<div class="flex w-full flex-auto flex-col overflow-hidden">
+    <form class="p-8 pb-4" [formGroup]="<%= entityCamel %>Form">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+            <div class="flex flex-col">
+                <mat-form-field
+                    [subscriptSizing]="'dynamic'"
+                    class="fuse-mat-dense"
+                >
+                    <mat-label>{{ <%= entityCamel %>Props.NAME | titlecase }}</mat-label>
+                    <input
+                        [formControlName]="<%= entityCamel %>Props.NAME"
+                        placeholder="Resume"
+                        matInput
+                    />
+                    <mat-error>
+                        {{
+                            getInputError(
+                                <%= entityCamel %>Form.get(<%= entityCamel %>Props.NAME),
+                                <%= entityCamel %>Props.NAME
+                            )
+                        }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <quill-editor
+            class="mt-4 w-full"
+            [modules]="modules"
+            [formControlName]="<%= entityCamel %>Props.DESCRIPTION"
+            [placeholder]="'About description here ...' | titlecase"
+        />
+    </form>
+
+    <!-- actions -->
+    <div
+        class="mt-8 flex w-full items-center justify-between border-t bg-gray-50 px-8 py-5 dark:bg-gray-700"
+    >
+        @if (id()) {
+            <button mat-button (click)="remove()">Delete</button>
+
+            <div class="flex justify-end px-8">
+                <button
+                    [matTooltip]="'Redirect to Add About'"
+                    [routerLink]="'../../add'"
+                    mat-icon-button
+                >
+                    <mat-icon svgIcon="heroicons_outline:plus-small" />
+                </button>
+            </div>
+        } @else {
+            <div>
+                <!-- empty div helps places Save button to the end  -->
+            </div>
+        }
+        <button
+            [color]="'primary'"
+            [disabled]="<%= entityCamel %>Form.invalid || isNotUpdated()"
+            (click)="save()"
+            class="ml-3 px-6"
+            mat-flat-button
+        >
+            Save
+        </button>
+    </div>
+</div>
