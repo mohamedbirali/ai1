@@ -25,7 +25,7 @@ export default class GCrud extends Command {
     const {args, flags} = await this.parse(GCrud)
     const {destination, model} = flags
     const {entity} = args
-    const entityProps = model?.trim().split(',') ?? 'id: string;\n  name: sring;'
+    const entityProps = model?.trim().split(',') ?? 'id: string;\n    name: string;'
     const entityLower = noCase(entity)
     const entityCapital = capitalCase(entity)
     const entityKebab = paramCase(entity)
